@@ -11,7 +11,7 @@ class SamplePage extends StatefulWidget {
 class _SamplePageState extends State<SamplePage> {
   final _pickedImages = <Image>[];
   String _imageInfo = '';
-  bool check = false;
+  bool check = true;
   bool check1 = false;
   Future<void> _pickImage() async {
     Image fromPicker =
@@ -33,6 +33,7 @@ class _SamplePageState extends State<SamplePage> {
     setState(() {
       _imageInfo = 'Name: ${infos.name}\nRelative Path: ${infos.relativePath}';
       check = true;
+      print(check);
     });
   }
 
@@ -75,7 +76,7 @@ class _SamplePageState extends State<SamplePage> {
               ),
               ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
                 Visibility(
-                  visible: check,
+                  visible: !check,
                   child: ElevatedButton(
                     onPressed: _pickImage,
                     child: const Text(' previw Image'),
@@ -99,9 +100,17 @@ class _SamplePageState extends State<SamplePage> {
                 //     child: const Text('Selec1 gi'),
                 //   ),
                 // ),
-                ElevatedButton(
-                  onPressed: _getImgFile,
-                  child: const Text('Get Image File'),
+                Visibility(
+                  visible: check,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _getImgFile();
+                        check = false;
+                      });
+                    },
+                    child: const Text('Get Image File'),
+                  ),
                 ),
                 Visibility(
                   visible: check1,
