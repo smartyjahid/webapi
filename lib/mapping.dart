@@ -1,7 +1,7 @@
 class Datamodel {
-  String image, auther, productname, productprice;
+  String image, auther, productname;
   bool isselected;
-  int srialno;
+  int srialno, productprice;
   Datamodel(
     this.isselected,
     this.srialno,
@@ -22,7 +22,7 @@ List<Datamodel> itemdetail = [
     "https://www.guru99.com/images/2/060520_1048_16BESTEthic1.jpg",
     "Hacking - The Art Of Exploitation",
     "Jon ErickSon-7th edition",
-    "Rs. 700",
+    700,
   ),
   Datamodel(
     false,
@@ -30,7 +30,7 @@ List<Datamodel> itemdetail = [
     "https://m.media-amazon.com/images/I/51p0f9Q6zEL.jpg",
     "Hacking wit Python",
     "unknown-3th edition",
-    "Rs. 1100",
+    1100,
   ),
   Datamodel(
     false,
@@ -38,7 +38,7 @@ List<Datamodel> itemdetail = [
     "https://m.media-amazon.com/images/I/51sjfmeSEyL.jpg",
     "Hacking Tools For Computer",
     "unknown-3th edition",
-    "Rs. 800",
+    800,
   ),
   Datamodel(
     false,
@@ -46,7 +46,7 @@ List<Datamodel> itemdetail = [
     "https://i.pinimg.com/originals/e0/fb/5a/e0fb5a642da337fa69aceca302bd3418.jpg",
     "Grey Hat C#",
     "unknown-7th edition",
-    "Rs. 600",
+    600,
   ),
   Datamodel(
     false,
@@ -54,7 +54,7 @@ List<Datamodel> itemdetail = [
     "https://www.fita.in/wp-content/themes/zeft/images/The-Web-Application-Hackers-Handbook-Finding-and-exploiting-security-flaws.jpg",
     "The Web Application-Hacking Handbook",
     "unknown-2th edition",
-    "Rs. 1300",
+    1300,
   ),
   // Datamodel(
   //   isselected: false,

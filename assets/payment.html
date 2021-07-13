@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width">
+<head><title>RazorPay Web Payment</title></head>
+<body>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    const queryString = window.location.search;
+   console.log(queryString);
+   const urlParams = new URLSearchParams(queryString);
+    var name = urlParams.get('name');
+    var amount = urlParams.get('amount');
+var options = {
+         "key": "rzp_test_sxAfKq1XHwyZl2",
+          "amount": amount*100,
+          "currency": "INR",
+
+          "name": name,
+          "description": "Test Transaction",
+          "image": "https://www.neappoli.com/static/media/flutterImg.94b8139a.png",
+          "handler": function (response){
+             window.parent.postMessage("SUCCESS","*");      //2 
+             alert(response.razorpay_payment_id);
+             alert(response.razorpay_order_id);
+             alert(response.razorpay_signature)    
+          },    
+          "prefill": {        
+             "name": name,        
+             "email": "Smartyjahid@gmail.com",
+             "contact": "9111182311"   
+           },   
+           "notes": {        
+             "address": "Autofy"    
+          },    
+          "theme": {
+             "color": "#DF0145"    
+          },
+          "modal": {
+            "ondismiss": function(){
+               window.parent.postMessage("MODAL_CLOSED","*");   //3
+            }
+          }
+       };
+
+       var rzp1 = new Razorpay(options);
+       window.onload = function(e){  //1  
+          rzp1.open();
+          e.preventDefault();
+       }
+
+     </script>
+</body>
+</html>

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:webapi/Crop.dart';
 import 'package:webapi/Sopping_Grid.dart';
 import 'package:webapi/imagepicked.dart';
+import 'package:webapi/rozer.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 // import 'package:webapi/Crop.dart';
@@ -128,8 +129,12 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SamplePage()));
-                        print("done");
+                                builder: (context) => RazorPayWeb()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => SamplePage()));
+                        // print("done");
                       },
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -144,6 +149,43 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
                               width: 5,
                             ),
                             Text("Cropping Machine"),
+                            Icon(Icons.arrow_forward),
+                            SizedBox(
+                              width: 7,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    RawMaterialButton(
+                      fillColor: Colors.yellow,
+                      hoverColor: Colors.indigo,
+                      splashColor: Colors.green,
+                      shape: StadiumBorder(),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RazorPayWeb()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => SamplePage()));
+                        // print("done");
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 8,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Icon(Icons.cut_outlined, color: Colors.grey),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text("paytm Gateway"),
                             Icon(Icons.arrow_forward),
                             SizedBox(
                               width: 7,

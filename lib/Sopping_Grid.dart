@@ -90,7 +90,7 @@ class _GridlistState extends State<Gridlist> {
                               height: 10,
                             ),
                             Text(auther),
-                            Text(pprice)
+                            Text("$pprice")
                           ],
                         )
                       ]),

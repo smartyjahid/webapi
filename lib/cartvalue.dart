@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:webapi/Sopping_Grid.dart';
 import 'package:webapi/mapping.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:webapi/rozer.dart';
 import 'package:webapi/screenShot.dart';
 
 class CartData extends StatefulWidget {
@@ -36,89 +37,97 @@ class _CartDataState extends State<CartData> {
   @override
   Widget build(BuildContext context) {
     return Screenshot(
-      controller: _controller,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Hacker  Cart'),
-          centerTitle: true,
-          actions: [
-            MaterialButton(
-              onPressed: () {
-                setState(() {
-                  print(counter);
+        controller: _controller,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Hacker  Cart'),
+            centerTitle: true,
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  setState(() {
+                    print(counter);
+                  });
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.card_giftcard_outlined),
+                    Text("$counter"),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RazorPayWeb()));
+                        },
+                        child: Text("Pay here")),
+                  ],
+                ),
+              )
+            ],
+          ),
+          body: ListView.builder(
+            itemCount: itemdetail.length,
+            itemBuilder: (context, index) {
+              return cartlist.contains(itemdetail[index].srialno)
+                  ? GridTilesCart(
+                      butnvisible: false,
+                      pname: itemdetail[index].productname,
+                      pprice: itemdetail[index].productprice,
+                      auther: itemdetail[index].auther,
+                      serial: itemdetail[index].srialno,
+                      pimage: itemdetail[index].image,
+                    )
+                  : Container();
+            },
+          ),
+          floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                // RenderRepaintBoundary? imageobject = imagekey.currentContext!
+                //     .findRenderObject() as RenderRepaintBoundary?;
+                // /////////////////////////////png
+                final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+                // final image = await imageobject!.toImage(pixelRatio: pixelRatio);
+                // ByteData? byteData =
+                //     await image.toByteData(format: ImageByteFormat.png);
+                // final pngbyte = byteData!.buffer.asUint8List();
+                // final base64byte = base64Encode(pngbyte);
+
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => ScreenShotviewer(
+                //               capturedimage: base64byte,
+                //             )));
+
+                _controller
+                    .captureAsUiImage(delay: Duration(milliseconds: 10))
+                    .then((capturedImage) async {
+                  final cpi = await capturedImage
+                      .toByteData(format: ImageByteFormat.png)
+                      .then((v) => v!.buffer.asUint8List());
+
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ScreenShotviewer(
+                                capturedimage: cpi,
+                              )));
+
+                  // screenshotview(context, cropped);
+                }).catchError((onError) {
+                  print(onError);
                 });
               },
-              child: Row(
-                children: [
-                  Icon(Icons.card_giftcard_outlined),
-                  Text("$counter")
-                ],
-              ),
-            )
-          ],
-        ),
-        body: ListView.builder(
-          itemCount: itemdetail.length,
-          itemBuilder: (context, index) {
-            return cartlist.contains(itemdetail[index].srialno)
-                ? GridTilesCart(
-                    butnvisible: false,
-                    pname: itemdetail[index].productname,
-                    pimage: itemdetail[index].image,
-                    pprice: itemdetail[index].productprice,
-                    auther: itemdetail[index].auther,
-                    serial: itemdetail[index].srialno)
-                : Container();
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              // RenderRepaintBoundary? imageobject = imagekey.currentContext!
-              //     .findRenderObject() as RenderRepaintBoundary?;
-              // /////////////////////////////png
-              final pixelRatio = MediaQuery.of(context).devicePixelRatio;
-              // final image = await imageobject!.toImage(pixelRatio: pixelRatio);
-              // ByteData? byteData =
-              //     await image.toByteData(format: ImageByteFormat.png);
-              // final pngbyte = byteData!.buffer.asUint8List();
-              // final base64byte = base64Encode(pngbyte);
-
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => ScreenShotviewer(
-              //               capturedimage: base64byte,
-              //             )));
-
-              _controller
-                  .captureAsUiImage(delay: Duration(milliseconds: 10))
-                  .then((capturedImage) async {
-                final cpi = await capturedImage
-                    .toByteData(format: ImageByteFormat.png)
-                    .then((v) => v!.buffer.asUint8List());
-
-                await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ScreenShotviewer(
-                              capturedimage: cpi,
-                            )));
-
-                // screenshotview(context, cropped);
-              }).catchError((onError) {
-                print(onError);
-              });
-            },
-            child: Icon(Icons.fit_screen)),
-      ),
-    );
+              child: Icon(Icons.fit_screen)),
+        ));
   }
 }
 
 class GridTilesCart extends StatefulWidget {
   final bool butnvisible;
-  final String pname, pimage, pprice, auther;
-  final int serial;
+  final String pname, pimage, auther;
+  final int serial, pprice;
   GridTilesCart(
       {required this.butnvisible,
       required this.pname,
@@ -245,7 +254,7 @@ class _GridTilesCartState extends State<GridTilesCart> {
                             borderbox("Reward Rs.200", Colors.white,
                                 Colors.black26, 18),
                             Icon(Icons.price_change),
-                            Text(widget.pprice,
+                            Text("${widget.pprice}",
                                 style: TextStyle(
                                     color: Colors.black45,
                                     fontSize: 20,
